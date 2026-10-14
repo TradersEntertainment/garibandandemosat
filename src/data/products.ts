@@ -1434,3 +1434,7 @@ export const PRODUCTS: Product[] = [
     ]
   }
 ];
+
+// offers are always presented cheapest-first
+PRODUCTS.forEach((p) => p.offers.sort((a, b) => a.price - b.price));
+
