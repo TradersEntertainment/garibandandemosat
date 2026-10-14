@@ -183,10 +183,10 @@ export function App() {
   const allStoresList = ['all', 'Amazon TR', 'Trendyol', 'Hepsiburada', 'Teknosa', 'MediaMarkt', 'N11', 'Pazarama'];
 
   return (
-    <div className="min-h-screen bg-[#0b0f19] text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-[#05070c] text-slate-100 flex flex-col font-sans selection:bg-cyber-emerald selection:text-obsidian-950">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 bg-emerald-500 text-slate-950 font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in slide-in-from-bottom-4 duration-200">
+        <div className="fixed bottom-6 right-6 z-50 bg-cyber-emerald text-obsidian-950 font-mono font-bold px-4 py-3 rounded-2xl shadow-2xl flex items-center gap-2 animate-in slide-in-from-bottom-4 duration-200">
           <CheckCircle2 size={18} />
           <span>{toast}</span>
         </div>
@@ -206,14 +206,17 @@ export function App() {
         isKelepirActive={isKelepirOnly}
       />
 
-      {/* Hero Section */}
+      {/* Hero Section with 3D Product Viewer */}
       <Hero
         onQuickSearch={(tag) => {
           setSearchQuery(tag);
           window.scrollTo({ top: 480, behavior: 'smooth' });
         }}
         onOpenMarketBasket={() => setIsMarketBasketOpen(true)}
-        onFilterKelepir={() => setIsKelepirOnly(true)}
+        onSelectProductDetails={(productId) => {
+          const found = PRODUCTS.find((p) => p.id === productId);
+          if (found) setSelectedProduct(found);
+        }}
       />
 
       {/* Daily Deals / Kelepir Section */}

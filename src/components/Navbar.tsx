@@ -6,10 +6,9 @@ import {
   Tag,
   Bell,
   Sparkles,
-  TrendingDown,
   X,
-  ExternalLink,
-  ChevronRight
+  Terminal,
+  Radio
 } from 'lucide-react';
 import { Product } from '../types';
 
@@ -42,7 +41,6 @@ export const Navbar: React.FC<NavbarProps> = ({
   const searchRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Close search suggestions when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
@@ -53,7 +51,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  // Keyboard shortcut '/' to focus search
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === '/' && document.activeElement !== inputRef.current) {
@@ -65,7 +62,6 @@ export const Navbar: React.FC<NavbarProps> = ({
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  // Filter products for dropdown
   const searchResults = searchQuery.trim()
     ? products
         .filter(
@@ -74,59 +70,61 @@ export const Navbar: React.FC<NavbarProps> = ({
             p.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
             p.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
         )
-        .slice(0, 5)
+        .slice(0, 6)
     : [];
 
   return (
-    <header className="sticky top-0 z-40 bg-slate-950/90 backdrop-blur-xl border-b border-slate-800/80">
-      {/* Top Banner Ticker */}
-      <div className="bg-gradient-to-r from-emerald-950 via-slate-950 to-emerald-950 py-1.5 px-4 text-center text-[11px] font-medium border-b border-emerald-900/40 flex items-center justify-center gap-2">
-        <span className="flex items-center gap-1 text-emerald-400 font-bold">
-          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-ping"></span>
-          CANLI FİYAT RADARI:
-        </span>
-        <span className="text-slate-300 hidden sm:inline">
-          Bugün 52.840 ürün fiyatı tarandı • Trendyol, Amazon, Hepsiburada ve 45+ mağaza aktif
-        </span>
-        <span className="text-slate-300 sm:hidden">
-          52.840 ürün fiyatı tarandı!
-        </span>
-        <span className="text-emerald-400 font-bold ml-1">#GaribanınDostu</span>
+    <header className="sticky top-0 z-40 bg-obsidian-950/90 backdrop-blur-2xl border-b border-white/10">
+      {/* Top Telemetry Scanning Stream */}
+      <div className="bg-obsidian-950/95 py-1 px-4 text-center text-[10px] sm:text-[11px] font-mono border-b border-white/5 flex items-center justify-between max-w-7xl mx-auto text-slate-400">
+        <div className="flex items-center gap-2">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyber-emerald animate-ping" />
+          <span className="text-cyber-emerald font-bold uppercase tracking-wider">
+            CANLI RADAR AKTİF:
+          </span>
+          <span className="text-slate-300 hidden md:inline">
+            Amazon TR, Hepsiburada, Trendyol, N11 ve 48 mağaza taranıyor
+          </span>
+        </div>
+        <div className="flex items-center gap-3 text-[10px]">
+          <span className="hidden sm:inline text-slate-500">[STATUS: 200_OK]</span>
+          <span className="text-cyber-emerald font-bold">#HalkınFiyatMotoru</span>
+        </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex items-center justify-between gap-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 flex items-center justify-between gap-4">
         {/* Brand Logo */}
         <div
           onClick={() => {
             onSearchChange('');
             window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
-          className="flex items-center gap-2.5 cursor-pointer group flex-shrink-0"
+          className="flex items-center gap-3 cursor-pointer group flex-shrink-0"
         >
-          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-emerald-500 to-teal-400 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-emerald-500/20 group-hover:scale-105 transition-transform">
-            <span className="text-2xl leading-none">₺</span>
+          <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-cyber-emerald to-cyan-400 flex items-center justify-center text-obsidian-950 font-black shadow-lg shadow-cyber-emerald/20 group-hover:scale-105 transition-transform">
+            <span className="text-2xl font-mono leading-none">₺</span>
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xl sm:text-2xl font-black tracking-tight text-white group-hover:text-emerald-400 transition-colors">
-                garibandan<span className="text-emerald-400">.com</span>
+            <div className="flex items-center gap-2">
+              <span className="text-xl sm:text-2xl font-black tracking-tight text-white group-hover:text-cyber-emerald transition-colors font-display">
+                garibandan<span className="text-cyber-emerald">.com</span>
               </span>
-              <span className="hidden md:inline-block text-[9px] font-black uppercase tracking-wider bg-emerald-500/15 text-emerald-400 border border-emerald-500/30 px-1.5 py-0.5 rounded">
-                v2.0
+              <span className="hidden md:inline-block text-[9px] font-mono font-bold uppercase tracking-wider bg-cyber-emerald/15 text-cyber-emerald border border-cyber-emerald/30 px-1.5 py-0.5 rounded-md">
+                3D_V2
               </span>
             </div>
-            <div className="text-[10px] text-slate-400 font-medium tracking-wide hidden sm:block">
-              Halkın Akıllı Fiyat Karşılaştırma Motoru
+            <div className="text-[10px] text-slate-400 font-mono tracking-wide hidden sm:block">
+              Halkın Yeni Nesil Fiyat Motoru
             </div>
           </div>
         </div>
 
-        {/* Global Search Bar with Live Suggestions */}
+        {/* Global Search Bar */}
         <div ref={searchRef} className="relative flex-1 max-w-xl mx-2 sm:mx-4">
           <div className="relative flex items-center">
             <Search
-              size={18}
-              className="absolute left-3.5 text-slate-400 pointer-events-none group-focus-within:text-emerald-400"
+              size={17}
+              className="absolute left-3.5 text-slate-400 pointer-events-none group-focus-within:text-cyber-emerald"
             />
             <input
               ref={inputRef}
@@ -137,8 +135,8 @@ export const Navbar: React.FC<NavbarProps> = ({
                 setIsDropdownOpen(true);
               }}
               onFocus={() => setIsDropdownOpen(true)}
-              placeholder="Ürün adı, marka veya model ara... (örn: iPhone 16, Dyson V15, Fairy)"
-              className="w-full bg-slate-900 border border-slate-700/80 rounded-2xl pl-10 pr-12 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all shadow-inner"
+              placeholder="Ürün adı, marka veya model ara... (örn: iPhone 16, Dyson V15)"
+              className="w-full bg-obsidian-900 border border-white/10 rounded-2xl pl-10 pr-12 py-2.5 text-xs sm:text-sm text-slate-100 placeholder-slate-500 font-mono focus:outline-none focus:border-cyber-emerald focus:ring-2 focus:ring-cyber-emerald/20 transition-all shadow-inner"
             />
             {searchQuery ? (
               <button
@@ -148,7 +146,7 @@ export const Navbar: React.FC<NavbarProps> = ({
                 <X size={15} />
               </button>
             ) : (
-              <kbd className="hidden sm:inline-block absolute right-3 px-2 py-0.5 text-[10px] font-semibold text-slate-400 bg-slate-800 rounded border border-slate-700 pointer-events-none">
+              <kbd className="hidden sm:inline-block absolute right-3 px-2 py-0.5 text-[10px] font-mono font-bold text-slate-400 bg-obsidian-850 rounded border border-white/10 pointer-events-none">
                 /
               </kbd>
             )}
@@ -156,11 +154,11 @@ export const Navbar: React.FC<NavbarProps> = ({
 
           {/* Autocomplete Dropdown */}
           {isDropdownOpen && searchResults.length > 0 && (
-            <div className="absolute top-full left-0 right-0 mt-2 bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-150">
-              <div className="p-2 border-b border-slate-800 text-[11px] font-bold text-slate-400 uppercase tracking-wider px-3">
-                Bulunan Eşleşmeler
+            <div className="absolute top-full left-0 right-0 mt-2 bg-obsidian-900 border border-white/10 rounded-2xl shadow-2xl overflow-hidden z-50 animate-in fade-in slide-in-from-top-2 duration-150">
+              <div className="p-2.5 border-b border-white/10 text-[10px] font-mono font-bold text-slate-400 uppercase tracking-wider px-3">
+                Canlı Eşleşen Sonuçlar ({searchResults.length})
               </div>
-              <div className="divide-y divide-slate-800/60 max-h-80 overflow-y-auto">
+              <div className="divide-y divide-white/5 max-h-80 overflow-y-auto">
                 {searchResults.map((product) => (
                   <div
                     key={product.id}
@@ -168,28 +166,28 @@ export const Navbar: React.FC<NavbarProps> = ({
                       onSelectProduct(product);
                       setIsDropdownOpen(false);
                     }}
-                    className="p-3 flex items-center justify-between gap-3 hover:bg-slate-800/50 cursor-pointer transition-colors"
+                    className="p-3 flex items-center justify-between gap-3 hover:bg-white/5 cursor-pointer transition-colors"
                   >
                     <div className="flex items-center gap-3">
                       <img
                         src={product.image}
                         alt={product.title}
-                        className="w-10 h-10 object-contain rounded-lg bg-slate-950 p-1 border border-slate-800"
+                        className="w-10 h-10 object-contain rounded-xl bg-obsidian-950 p-1 border border-white/10"
                       />
                       <div>
-                        <div className="text-xs font-semibold text-white line-clamp-1">
+                        <div className="text-xs font-bold text-white line-clamp-1 font-display">
                           {product.title}
                         </div>
-                        <div className="text-[10px] text-slate-400">
-                          {product.brand} • <span className="text-emerald-400">{product.storesCount} Mağaza</span>
+                        <div className="text-[10px] text-slate-400 font-mono">
+                          {product.brand} • <span className="text-cyber-emerald">{product.storesCount} Mağaza</span>
                         </div>
                       </div>
                     </div>
-                    <div className="text-right">
-                      <div className="text-xs font-black text-emerald-400">
+                    <div className="text-right font-mono">
+                      <div className="text-xs font-black text-cyber-emerald">
                         ₺{product.lowestPrice.toLocaleString('tr-TR')}
                       </div>
-                      <div className="text-[10px] text-slate-500">en ucuz</div>
+                      <div className="text-[9px] text-slate-500 uppercase">en dip</div>
                     </div>
                   </div>
                 ))}
@@ -199,50 +197,50 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
 
         {/* Action Buttons */}
-        <div className="flex items-center gap-1.5 sm:gap-2">
-          {/* Günün Kelepirleri Filter Toggle */}
+        <div className="flex items-center gap-1.5 sm:gap-2 font-mono">
+          {/* Günün Kelepirleri */}
           <button
             onClick={onFilterKelepir}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold transition-all ${
               isKelepirActive
                 ? 'bg-rose-500 text-white shadow-lg shadow-rose-500/25 ring-2 ring-rose-400'
-                : 'bg-slate-900 text-rose-400 hover:bg-slate-800 border border-rose-500/30'
+                : 'bg-obsidian-900 text-rose-400 hover:bg-white/5 border border-rose-500/30'
             }`}
-            title="Sadece Son 6 Ayın En Dip Fiyatları"
+            title="Sadece Dip Fiyatlar"
           >
-            <Flame size={15} className={isKelepirActive ? 'animate-bounce' : ''} />
-            <span className="hidden md:inline">Günün Kelepirleri</span>
+            <Flame size={14} className={isKelepirActive ? 'animate-bounce' : ''} />
+            <span className="hidden md:inline">Kelepirler</span>
           </button>
 
-          {/* Market Sepeti Button */}
+          {/* Market Sepeti */}
           <button
             onClick={onOpenMarketBasket}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-slate-900 text-emerald-400 hover:bg-slate-800 border border-emerald-500/30 transition-all"
-            title="Market Sepetini Kıyasla (Migros, Şok, A101)"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-obsidian-900 text-cyber-emerald hover:bg-white/5 border border-cyber-emerald/30 transition-all"
+            title="Market Sepetini Kıyasla"
           >
-            <ShoppingCart size={15} />
+            <ShoppingCart size={14} />
             <span className="hidden lg:inline">Market Sepeti</span>
           </button>
 
-          {/* Kuponlar Button */}
+          {/* Kuponlar */}
           <button
             onClick={onOpenCoupons}
-            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-slate-900 text-amber-400 hover:bg-slate-800 border border-amber-500/30 transition-all"
-            title="Çalışan Kupon Kodları"
+            className="flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold bg-obsidian-900 text-amber-400 hover:bg-white/5 border border-amber-500/30 transition-all"
+            title="Kupon Kodları"
           >
-            <Tag size={15} />
+            <Tag size={14} />
             <span className="hidden xl:inline">Kuponlar</span>
           </button>
 
-          {/* Fiyat Alarmları Button */}
+          {/* Fiyat Alarmları */}
           <button
             onClick={onOpenAlerts}
-            className="relative p-2.5 rounded-xl bg-slate-900 text-slate-300 hover:text-indigo-400 hover:bg-slate-800 border border-slate-700/80 transition-all"
-            title="Kayıtlı Fiyat Alarmları"
+            className="relative p-2.5 rounded-xl bg-obsidian-900 text-slate-300 hover:text-cyber-emerald hover:bg-white/5 border border-white/10 transition-all"
+            title="Fiyat Alarmları"
           >
-            <Bell size={16} />
+            <Bell size={15} />
             {alertsCount > 0 && (
-              <span className="absolute -top-1 -right-1 w-4 h-4 bg-indigo-500 text-white text-[10px] font-black rounded-full flex items-center justify-center animate-pulse">
+              <span className="absolute -top-1 -right-1 w-4 h-4 bg-cyber-emerald text-obsidian-950 text-[9px] font-black rounded-full flex items-center justify-center animate-pulse">
                 {alertsCount}
               </span>
             )}

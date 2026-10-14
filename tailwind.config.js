@@ -8,38 +8,44 @@ export default {
   theme: {
     extend: {
       colors: {
-        gariban: {
-          50: '#ecfdf5',
-          100: '#d1fae5',
-          200: '#a7f3d0',
-          300: '#6ee7b7',
-          400: '#34d399',
-          500: '#10b981',
-          600: '#059669',
-          700: '#047857',
-          800: '#065f46',
-          900: '#064e3b',
-          950: '#022c22',
+        obsidian: {
+          950: '#030408',
+          900: '#05070c',
+          850: '#080c14',
+          800: '#0d1320',
+          750: '#121a2c',
+          700: '#18233a',
+          600: '#26375a',
         },
-        brand: {
-          dark: '#0b0f19',
-          card: '#131b2e',
-          accent: '#3b82f6',
-          danger: '#ef4444',
-          warning: '#f59e0b',
-        }
+        cyber: {
+          emerald: '#0df5a2',
+          mint: '#34f8b9',
+          cyan: '#06d6a0',
+          indigo: '#6366f1',
+          rose: '#f43f5e',
+          amber: '#f59e0b',
+        },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        display: ['"Space Grotesk"', 'system-ui', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+        mono: ['"JetBrains Mono"', 'monospace'],
       },
       animation: {
-        'pulse-fast': 'pulse 1.2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'bounce-subtle': 'bounceSubtle 2s infinite',
+        'spin-slow': 'spin 18s linear infinite',
+        'spin-reverse': 'spin 25s linear infinite reverse',
+        'pulse-subtle': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'float-slow': 'floatSlow 4s ease-in-out infinite',
+        'scanline': 'scanline 8s linear infinite',
       },
       keyframes: {
-        bounceSubtle: {
-          '0%, 100%': { transform: 'translateY(-3%)' },
-          '50%': { transform: 'translateY(0)' },
+        floatSlow: {
+          '0%, 100%': { transform: 'translateY(0px)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        scanline: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(1000%)' },
         }
       }
     },
