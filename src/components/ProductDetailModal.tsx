@@ -18,6 +18,7 @@ import {
 import confetti from 'canvas-confetti';
 import { Product, StoreOffer } from '../types';
 import { PriceHistoryChart } from './PriceHistoryChart';
+import { Universal3DViewer } from './Universal3DViewer';
 
 interface ProductDetailModalProps {
   product: Product | null;
@@ -114,31 +115,25 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
         <div className="p-4 sm:p-6 max-h-[80vh] overflow-y-auto space-y-6">
           {/* Top Product Hero Block */}
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-            {/* Image Preview with 3D Spin capability */}
+            {/* Image Preview */}
             <div className="md:col-span-5 bg-gradient-to-b from-obsidian-950 to-obsidian-900 rounded-3xl p-6 border border-white/8 flex items-center justify-center relative group min-h-[260px] overflow-hidden">
               <img
                 src={product.image}
                 alt={product.title}
-                className={`max-h-60 w-auto object-contain transition-all duration-300 ${
-                  is3dSpinning ? 'animate-spin-slow' : 'group-hover:scale-105'
-                }`}
+                className="max-h-60 w-auto object-contain transition-all duration-300 group-hover:scale-105"
               />
 
               <div className="absolute top-3 left-3 bg-obsidian-950/90 backdrop-blur-md border border-white/10 text-xs font-mono font-bold px-2.5 py-1 rounded-xl text-slate-300">
                 {product.brand}
               </div>
 
-              {/* 3D Spin Toggle on preview */}
+              {/* Button to open 3D Tab */}
               <button
-                onClick={() => setIs3dSpinning(!is3dSpinning)}
-                className={`absolute bottom-3 right-3 px-2.5 py-1 rounded-xl text-[10px] font-mono font-bold flex items-center gap-1.5 border transition-all ${
-                  is3dSpinning
-                    ? 'bg-cyber-emerald text-obsidian-950 border-cyber-emerald shadow-lg'
-                    : 'bg-obsidian-950/90 text-slate-300 border-white/10'
-                }`}
+                onClick={() => setActiveTab('3d')}
+                className="absolute bottom-3 right-3 px-3 py-1.5 rounded-xl text-[10px] font-mono font-bold flex items-center gap-1.5 border border-cyber-emerald/40 bg-cyber-emerald/15 hover:bg-cyber-emerald hover:text-obsidian-950 text-cyber-emerald transition-all shadow-lg"
               >
-                <RotateCw size={11} className={is3dSpinning ? 'animate-spin' : ''} />
-                <span>{is3dSpinning ? '3D Dönüyor' : '3D Döndür'}</span>
+                <Box size={13} />
+                <span>3D Modelini Gör</span>
               </button>
 
               {product.discountPercentage && product.discountPercentage > 0 && (
@@ -421,44 +416,19 @@ export const ProductDetailModal: React.FC<ProductDetailModalProps> = ({
             </div>
           )}
 
-          {/* Tab 2: 3D Turntable View */}
+          {/* Tab 2: Real 3D Model WebGL Canvas */}
           {activeTab === '3d' && (
-            <div className="bg-obsidian-950 rounded-3xl p-8 border border-white/10 text-center relative overflow-hidden">
-              <div className="absolute inset-0 bg-radial-vignette opacity-70 pointer-events-none" />
-
-              <div className="relative z-10 max-w-md mx-auto space-y-4">
-                <span className="text-[11px] font-mono text-cyber-emerald bg-cyber-emerald/10 border border-cyber-emerald/30 px-3 py-1 rounded-full uppercase tracking-wider">
-                  3D TURNTABLE MODEL PREVIEW
+            <div className="space-y-3">
+              <div className="flex items-center justify-between text-xs font-mono">
+                <span className="text-white font-bold flex items-center gap-1.5">
+                  <Sparkles size={14} className="text-cyber-emerald" />
+                  <span>Gerçek 3D Ürün Modeli & CAD Simülasyonu</span>
                 </span>
-
-                <div className="w-64 h-64 mx-auto relative flex items-center justify-center">
-                  <img
-                    src={product.image}
-                    alt={product.title}
-                    style={{
-                      transform: is3dSpinning ? 'rotateY(360deg)' : 'none',
-                      transition: is3dSpinning ? 'transform 3s linear infinite' : 'transform 0.3s',
-                    }}
-                    className={`max-h-full max-w-full object-contain ${
-                      is3dSpinning ? 'animate-spin-slow' : ''
-                    }`}
-                  />
-                </div>
-
-                <div className="flex items-center justify-center gap-3">
-                  <button
-                    onClick={() => setIs3dSpinning(!is3dSpinning)}
-                    className="flex items-center gap-2 px-4 py-2 rounded-xl bg-cyber-emerald text-obsidian-950 font-mono font-bold text-xs uppercase"
-                  >
-                    <RotateCw size={14} className={is3dSpinning ? 'animate-spin' : ''} />
-                    <span>{is3dSpinning ? 'Dönüşü Durdur' : '360° Otomatik Döndür'}</span>
-                  </button>
-                </div>
-
-                <p className="text-xs text-slate-400 font-mono">
-                  Gerçek boyutlu CAD / 3D doku simülasyonu
-                </p>
+                <span className="text-slate-400">
+                  Fareyle serbestçe 360° döndürebilirsiniz
+                </span>
               </div>
+              <Universal3DViewer product={product} height={380} />
             </div>
           )}
 

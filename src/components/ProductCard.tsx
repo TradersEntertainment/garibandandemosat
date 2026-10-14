@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { Star, Bell, ArrowRight, ShieldCheck, TrendingDown, Store, Sparkles, RotateCw, Eye } from 'lucide-react';
 import { Product } from '../types';
+import { Universal3DViewer } from './Universal3DViewer';
 
 interface ProductCardProps {
   product: Product;
@@ -122,38 +123,29 @@ export const ProductCard: React.FC<ProductCardProps> = ({
         </div>
       </div>
 
-      {/* Image Showcase Stage with 3D Spin capability */}
-      <div className="relative w-full pt-[75%] bg-gradient-to-b from-obsidian-950 to-obsidian-900/60 overflow-hidden flex items-center justify-center p-5">
+      {/* Image Showcase Stage or Real 3D Model */}
+      <div className="relative w-full h-52 bg-gradient-to-b from-obsidian-950 to-obsidian-900/60 overflow-hidden flex items-center justify-center p-3">
         {/* Subtle radial light in background */}
         <div className="absolute inset-0 bg-radial-vignette opacity-50 pointer-events-none" />
 
-        <img
-          src={product.image}
-          alt={product.title}
-          style={{
-            transform: is3dSpinning
-              ? 'scale(1.08) rotateY(360deg)'
-              : undefined,
-            transition: is3dSpinning ? 'transform 3s linear infinite' : 'transform 0.4s ease-out',
-          }}
-          className={`absolute inset-0 w-full h-full object-contain p-6 transform group-hover:scale-105 transition-transform duration-300 ${
-            is3dSpinning ? 'animate-spin-slow' : ''
-          }`}
-          loading="lazy"
-        />
-
-        {/* Free Shipping Tag */}
-        {product.freeShippingAvailable && (
-          <div className="absolute bottom-2.5 left-3.5 bg-obsidian-950/90 backdrop-blur-md text-cyber-emerald border border-cyber-emerald/30 text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg flex items-center gap-1">
-            <ShieldCheck size={11} />
-            ÜCRETSİZ KARGO
+        {is3dSpinning ? (
+          <div className="w-full h-full" onClick={(e) => e.stopPropagation()}>
+            <Universal3DViewer product={product} height={200} />
           </div>
+        ) : (
+          <img
+            src={product.image}
+            alt={product.title}
+            className="w-full h-full object-contain p-4 transform group-hover:scale-105 transition-transform duration-300"
+            loading="lazy"
+          />
         )}
 
-        {/* 3D Spin Active Indicator */}
-        {is3dSpinning && (
-          <div className="absolute bottom-2.5 right-3.5 bg-cyber-emerald text-obsidian-950 text-[10px] font-mono font-black px-2 py-0.5 rounded-lg animate-pulse">
-            3D DÖNÜYOR
+        {/* Free Shipping Tag */}
+        {product.freeShippingAvailable && !is3dSpinning && (
+          <div className="absolute bottom-2.5 left-3.5 bg-obsidian-950/90 backdrop-blur-md text-cyber-emerald border border-cyber-emerald/30 text-[10px] font-mono font-bold px-2 py-0.5 rounded-lg flex items-center gap-1 pointer-events-none">
+            <ShieldCheck size={11} />
+            ÜCRETSİZ KARGO
           </div>
         )}
       </div>

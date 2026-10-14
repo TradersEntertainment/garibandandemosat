@@ -23,6 +23,8 @@ interface NavbarProps {
   alertsCount: number;
   onFilterKelepir: () => void;
   isKelepirActive: boolean;
+  appMode: 'products' | 'services';
+  onToggleMode: (mode: 'products' | 'services') => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -36,6 +38,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   alertsCount,
   onFilterKelepir,
   isKelepirActive,
+  appMode,
+  onToggleMode,
 }) => {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const searchRef = useRef<HTMLDivElement>(null);
@@ -117,6 +121,31 @@ export const Navbar: React.FC<NavbarProps> = ({
               Halkın Yeni Nesil Fiyat Motoru
             </div>
           </div>
+        </div>
+
+        {/* Dual Mode Switcher: Cimri (Ürünler) vs Armut (Hizmet & Usta) */}
+        <div className="flex items-center bg-obsidian-900 p-1 rounded-2xl border border-white/10 text-xs font-mono font-bold">
+          <button
+            onClick={() => onToggleMode('products')}
+            className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+              appMode === 'products'
+                ? 'bg-cyber-emerald text-obsidian-950 font-black shadow-lg shadow-cyber-emerald/20'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>📦 Ürünler</span>
+          </button>
+          <button
+            onClick={() => onToggleMode('services')}
+            className={`px-3 py-1.5 rounded-xl transition-all flex items-center gap-1.5 ${
+              appMode === 'services'
+                ? 'bg-cyber-emerald text-obsidian-950 font-black shadow-lg shadow-cyber-emerald/20'
+                : 'text-slate-400 hover:text-white'
+            }`}
+          >
+            <span>🛠️ Usta & Hizmet</span>
+            <span className="bg-rose-500 text-white text-[9px] px-1.5 py-0.2 rounded-full font-black animate-pulse">ARMUT</span>
+          </button>
         </div>
 
         {/* Global Search Bar */}
