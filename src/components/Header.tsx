@@ -8,14 +8,14 @@ import { useAlerts } from '../lib/alerts';
 
 export function Logo({ light = false }: { light?: boolean }) {
   return (
-    <a href="#/" className="group inline-flex items-center gap-2.5" aria-label="garibandan ana sayfa">
+    <a href="#/" className="group inline-flex items-center gap-2.5" aria-label="garibandan.com ana sayfa">
       <svg width="30" height="30" viewBox="0 0 32 32" aria-hidden className="transition-transform group-hover:-rotate-6">
         <rect width="32" height="32" rx="8" fill={light ? '#ffd84d' : '#14110f'} />
         <path d="M9 11.5A2.5 2.5 0 0 1 11.5 9H17l7 7-6.5 6.5-7-7z" fill={light ? '#14110f' : '#ffd84d'} />
         <circle cx="13.2" cy="12.7" r="1.5" fill={light ? '#ffd84d' : '#14110f'} />
       </svg>
       <span className={`font-display text-[24px] font-extrabold tracking-tight ${light ? 'text-paper' : 'text-ink'}`}>
-        garibandan<span className="text-save">.</span>
+        garibandan<span className={light ? 'text-tag' : 'text-save'}>.com</span>
       </span>
     </a>
   );
